@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { io } from 'socket.io-client';
+import { API_URL, SOCKET_URL } from '../services/api';
 
-const socket = io('http://localhost:4000');
+const socket = io(SOCKET_URL);
 
 const chatList = [
   {
@@ -98,7 +99,7 @@ export default function Messages() {
     setAttachedFiles([]);
 
     try {
-      await fetch('http://localhost:4000/api/messages', {
+      await fetch(`${API_URL}/messages`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user: 'Bạn', text: newMessage.text }),

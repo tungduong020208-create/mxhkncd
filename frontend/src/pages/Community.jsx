@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../services/api';
 import CommunityCard from '../components/CommunityCard';
 
 const categories = ['Tất cả', 'Công nghệ', 'Học tập', 'Gaming', 'Design', 'Thể thao', 'Kinh doanh', 'Sức khỏe'];
@@ -149,7 +150,7 @@ export default function Community() {
   useEffect(() => {
     async function loadCommunities() {
       try {
-        const response = await fetch('http://localhost:4000/api/communities');
+        const response = await fetch(`${API_URL}/communities`);
         const data = await response.json();
         const merged = sampleCommunities.map((sample) => {
           const server = data.find((item) => item.id === sample.id);
@@ -182,7 +183,7 @@ export default function Community() {
   const handleJoin = async (communityId) => {
     if (!user) return;
     try {
-      await fetch(`http://localhost:4000/api/communities/${communityId}/join`, {
+      await fetch(`${API_URL}/communities/${communityId}/join`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: user.id }),

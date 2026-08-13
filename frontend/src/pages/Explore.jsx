@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../services/api';
 
 const categories = ['Tất cả', 'Công nghệ', 'Học tập', 'Gaming', 'Design', 'Âm nhạc', 'Thể thao', 'Du lịch', 'Nhiếp ảnh', 'Phim'];
 const searchTypes = ['Người dùng', 'Bài viết', 'Cộng đồng', 'Câu hỏi', 'Sự kiện', 'Tài liệu'];
@@ -52,7 +53,7 @@ export default function Explore() {
   useEffect(() => {
     async function fetchPosts() {
       try {
-        const response = await fetch('http://localhost:4000/api/posts');
+        const response = await fetch(`${API_URL}/posts`);
         const data = await response.json();
         setPosts(data.posts || []);
       } catch (error) {

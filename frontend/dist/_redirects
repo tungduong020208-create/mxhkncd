@@ -1,0 +1,6 @@
+# SPA fallback: mọi đường dẫn đều trả về index.html (tránh lỗi 404 khi refresh / vào thẳng route)
+/* /index.html 200
+
+# Khi đã deploy backend lên Render/Railway/Fly.io, bỏ comment dòng dưới (thay URL backend của bạn)
+# để Netlify proxy /api sang backend mà không cần đặt biến môi trường:
+# /api/*  https://backend-cua-ban.onrender.com/api/:splat  200

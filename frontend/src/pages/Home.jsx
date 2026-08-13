@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../services/api';
 import CreatePost from '../components/CreatePost';
 import Story from '../components/Story';
 import Post from '../components/Post';
@@ -25,7 +26,7 @@ export default function Home() {
     const fetchPosts = async (pageToLoad = 1) => {
       setLoading(true);
       try {
-        const response = await fetch(`http://localhost:4000/api/posts?page=${pageToLoad}&limit=5`);
+        const response = await fetch(`${API_URL}/posts?page=${pageToLoad}&limit=5`);
         const data = await response.json();
         if (data.posts) {
           setPosts((prev) => (pageToLoad === 1 ? data.posts : [...prev, ...data.posts]));
@@ -59,7 +60,7 @@ export default function Home() {
     const loadMore = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`http://localhost:4000/api/posts?page=${page}&limit=5`);
+        const response = await fetch(`${API_URL}/posts?page=${page}&limit=5`);
         const data = await response.json();
         if (data.posts) {
           setPosts((prev) => [...prev, ...data.posts]);
@@ -78,7 +79,7 @@ export default function Home() {
     if (!newPostContent.trim()) return;
 
     try {
-      const response = await fetch('http://localhost:4000/api/posts', {
+      const response = await fetch(`${API_URL}/posts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user: user?.name || 'Người dùng', content: newPostContent, type: postType, progress }),
@@ -97,7 +98,7 @@ export default function Home() {
 
   const handleReaction = async (postId) => {
     try {
-      const response = await fetch(`http://localhost:4000/api/posts/${postId}/like`, { method: 'POST' });
+      const response = await fetch(`${API_URL}/posts/${postId}/like`, { method: 'POST' });
       const data = await response.json();
       if (response.ok) {
         setPosts((prev) => prev.map((post) => (post.id === data.id ? { ...post, likes: data.likes } : post)));
@@ -109,7 +110,7 @@ export default function Home() {
 
   const handleShare = async (postId) => {
     try {
-      const response = await fetch(`http://localhost:4000/api/posts/${postId}/share`, { method: 'POST' });
+      const response = await fetch(`${API_URL}/posts/${postId}/share`, { method: 'POST' });
       const data = await response.json();
       if (response.ok) {
         setPosts((prev) => prev.map((post) => (post.id === data.id ? { ...post, shares: data.shares } : post)));
