@@ -1,0 +1,21 @@
+# Cấu hình Netlify cho MXHKNCD — file này giúp Netlify tự build đúng mà
+# không cần chỉnh tay trong dashboard (Base directory / Build command / Publish).
+
+[build]
+  base = "frontend"
+  command = "npm run build"
+  publish = "dist"
+
+# SPA fallback: mọi đường dẫn trả về index.html để React Router không bị 404
+# khi refresh hoặc vào thẳng route (/login, /messages, ...)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Sau khi deploy backend (Render/Railway/Fly.io), bỏ comment 2 dòng dưới và
+# thay URL backend của bạn để /api chạy được mà không cần biến môi trường:
+# [[redirects]]
+#   from = "/api/*"
+#   to = "https://backend-cua-ban.onrender.com/api/:splat"
+#   status = 200
