@@ -1,20 +1,13 @@
-# Cấu hình Netlify cho MXHKNCD — file này giúp Netlify tự build đúng mà
-# không cần chỉnh tay trong dashboard (Base directory / Build command / Publish).
+# Cấu hình Netlify cho MXHKNCD (Next.js).
+# Netlify tự nhận diện Next.js và xử lý routing — không cần SPA redirect.
 
 [build]
   base = "frontend"
   command = "npm run build"
-  publish = "dist"
 
-# SPA fallback: mọi đường dẫn trả về index.html để React Router không bị 404
-# khi refresh hoặc vào thẳng route (/login, /messages, ...)
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-# Sau khi deploy backend (Render/Railway/Fly.io), bỏ comment 2 dòng dưới và
-# thay URL backend của bạn để /api chạy được mà không cần biến môi trường:
+# Sau khi deploy backend (Render/Railway/Fly.io), đặt biến môi trường
+# NEXT_PUBLIC_API_URL=https://backend-cua-ban.onrender.com trên Netlify.
+# Hoặc bỏ comment 2 dòng dưới (thay URL backend của bạn) để Netlify proxy /api:
 # [[redirects]]
 #   from = "/api/*"
 #   to = "https://backend-cua-ban.onrender.com/api/:splat"

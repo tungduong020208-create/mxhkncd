@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useAuth } from '../context/AuthContext';
 
 const navItems = [
@@ -13,6 +14,7 @@ const navItems = [
 
 export default function Sidebar() {
   const { user } = useAuth();
+  const pathname = usePathname();
 
   return (
     <aside className="hidden md:block md:w-24 lg:w-80 shrink-0">
@@ -36,18 +38,16 @@ export default function Sidebar() {
 
         <div className="space-y-2">
           {navItems.map((item) => (
-            <NavLink
+            <Link
               key={item.label}
-              to={item.path}
-              className={({ isActive }) =>
-                `flex items-center gap-3 rounded-3xl px-4 py-3 text-sm font-medium transition ${
-                  isActive ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-100'
-                }`
-              }
+              href={item.path}
+              className={`flex items-center gap-3 rounded-3xl px-4 py-3 text-sm font-medium transition ${
+                pathname === item.path ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-100'
+              }`}
             >
               <span>{item.icon}</span>
               <span>{item.label}</span>
-            </NavLink>
+            </Link>
           ))}
         </div>
       </div>
