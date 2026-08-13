@@ -3,7 +3,12 @@
 
 [build]
   base = "frontend"
-  command = "npm run build"
+  # npm ci cài sạch dependencies mỗi lần build — tránh lỗi cache hỏng
+  # (ví dụ: Cannot find module react.production.js)
+  command = "npm ci && npm run build"
+
+[build.environment]
+  NODE_VERSION = "22"
 
 # Sau khi deploy backend (Render/Railway/Fly.io), đặt biến môi trường
 # NEXT_PUBLIC_API_URL=https://backend-cua-ban.onrender.com trên Netlify.
